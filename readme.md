@@ -6,7 +6,9 @@ Esimerkkiprojekti websocket-ominaisuuksien tuomisesta Django-projektiin.
 - ```pip install -r requirements.txt```
 
 ### Käynnistys
-- ```python testproject/manage.py runserver```
+- ```cd testproject```
+- ```python manage.py migrate```
+- ```python manage.py runserver```
 - Avaa [localhost:8000/chat](http://localhost:8000/chat/)
 
 ### Muuta
