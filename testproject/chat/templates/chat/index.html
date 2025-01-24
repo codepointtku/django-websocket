@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Lets chatting</h1>
+    <div id="chatWindow"></div>
+    <input type="text" id="chatInput">
+    <button onclick="sendMessage()" id="submitButton">Lähetä</button>
+</body>
+<script>
+    const chatWindow = document.getElementById('chatWindow')
+    const chatInput = document.getElementById('chatInput')
+    const submitButton = document.getElementById('submitButton')
+
+    const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/')
+
+    chatSocket.onmessage = (e) => {
+        const data = JSON.parse(e.data)
+        const message = document.createElement('p')
+        message.innerHTML = data.message
+        chatWindow.appendChild(message)
+    }
+
+    chatSocket.onerror = (e) => {
+        console.error('Yhteys katkesi', e)
+    }
+
+    function sendMessage() {
+        const message = chatInput.value
+        chatSocket.send(JSON.stringify({ message }))
+        chatInput.value = ''
+    }
+</script>
+</html>
